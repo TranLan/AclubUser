@@ -383,7 +383,7 @@ public class NearByRestaurantsFragment extends Fragment implements
 		switch (v.getId()) {
 		case R.id.search_restaurance_btn:
 			RestHelper.getInstance().getRestaurantByName(getActivity(),
-					latitude, longitude, radius, paging, "bear",
+					latitude, longitude, radius, paging, "beer",
 					new ResponseHandler() {
 
 						@Override
