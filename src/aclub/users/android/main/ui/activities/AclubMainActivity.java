@@ -5,17 +5,23 @@ package aclub.users.android.main.ui.activities;
 
 import java.util.ArrayList;
 
+import aclub.users.android.MainActivity;
 import aclub.users.android.R;
 import aclub.users.android.abstractactivity.AclubBaseActivity;
-import aclub.users.android.log.DLog;
+import aclub.users.android.db.SPConstants;
+import aclub.users.android.db.SpManager;
 import aclub.users.android.main.models.DrawerItem;
 import aclub.users.android.main.ui.cusview.DrawerAdapter;
 import aclub.users.android.main.ui.fragments.AclubFirstFragament;
-import aclub.users.android.main.ui.fragments.FragmentSecond;
 import aclub.users.android.main.ui.fragments.NearByRestaurantsFragment;
 import aclub.users.android.main.ui.fragments.VoucherBoxFragment;
+import aclub.users.android.ui.cusdialog.CusDialogQuestion;
+import aclub.users.android.ui.cusdialog.EventDialog;
 import aclub.users.android.utils.CommonValues;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentManager;
@@ -38,8 +44,7 @@ import android.widget.RelativeLayout;
  * @author ntdong2012
  *
  */
-public class AclubMainActivity extends AclubBaseActivity implements
-		OnItemClickListener {
+public class AclubMainActivity extends AclubBaseActivity implements OnItemClickListener {
 
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -47,6 +52,8 @@ public class AclubMainActivity extends AclubBaseActivity implements
 
 	private RelativeLayout mAbLayout;
 	private ArrayList<DrawerItem> drawerList;
+	private SharedPreferences spf;
+	private Editor edt;
 
 	/*
 	 * (non-Javadoc)
@@ -63,6 +70,8 @@ public class AclubMainActivity extends AclubBaseActivity implements
 		initDrawer();
 		onItemClick(null, null, 0, 0);
 		initActionBar();
+		spf = SpManager.getInstances(AclubMainActivity.this);
+		edt = spf.edit();
 	}
 
 	private void initActionBar() {
@@ -78,29 +87,18 @@ public class AclubMainActivity extends AclubBaseActivity implements
 		drawerList = new ArrayList<DrawerItem>();
 		drawerList.add(new DrawerItem(true));
 
-		drawerList.add(new DrawerItem(getString(R.string.drawer_item_one),
-				R.drawable.drawer_home));
-		drawerList.add(new DrawerItem(getString(R.string.drawer_item_two),
-				R.drawable.drawer_voucher_box));
-		drawerList.add(new DrawerItem(getString(R.string.drawer_item_three),
-				R.drawable.ic_action_gamepad));
-		drawerList.add(new DrawerItem(getString(R.string.drawer_item_four),
-				R.drawable.drawer_checkin));
-		drawerList.add(new DrawerItem(getString(R.string.drawer_item_five),
-				R.drawable.drawer_news_feed));
-		drawerList.add(new DrawerItem(getString(R.string.drawer_item_six),
-				R.drawable.drawer_rewards));
-		drawerList.add(new DrawerItem(getString(R.string.drawer_item_sevend),
-				R.drawable.drawer_brands));
-		drawerList.add(new DrawerItem(getString(R.string.drawer_item_eight),
-				R.drawable.drawer_friends));
+		drawerList.add(new DrawerItem(getString(R.string.drawer_item_one), R.drawable.drawer_home));
+		drawerList.add(new DrawerItem(getString(R.string.drawer_item_two), R.drawable.drawer_voucher_box));
+		drawerList.add(new DrawerItem(getString(R.string.drawer_item_three), R.drawable.ic_action_gamepad));
+		drawerList.add(new DrawerItem(getString(R.string.drawer_item_four), R.drawable.drawer_checkin));
+		drawerList.add(new DrawerItem(getString(R.string.drawer_item_five), R.drawable.drawer_news_feed));
+		drawerList.add(new DrawerItem(getString(R.string.drawer_item_six), R.drawable.drawer_rewards));
+		drawerList.add(new DrawerItem(getString(R.string.drawer_item_sevend), R.drawable.drawer_brands));
+		drawerList.add(new DrawerItem(getString(R.string.drawer_item_eight), R.drawable.drawer_friends));
 		drawerList.add(new DrawerItem());
-		drawerList.add(new DrawerItem(getString(R.string.drawer_item_night),
-				R.drawable.drawer_profile));
-		drawerList.add(new DrawerItem(getString(R.string.drawer_item_ten),
-				R.drawable.drawer_settings));
-		DrawerAdapter adapter = new DrawerAdapter(this,
-				R.layout.custom_list_drawer_layout, drawerList);
+		drawerList.add(new DrawerItem(getString(R.string.drawer_item_night), R.drawable.drawer_profile));
+		drawerList.add(new DrawerItem(getString(R.string.logout_label), R.drawable.drawer_settings)); // change for settings --> logout
+		DrawerAdapter adapter = new DrawerAdapter(this, R.layout.custom_list_drawer_layout, drawerList);
 
 		mDrawerList.setAdapter(adapter);
 		mDrawerList.setOnItemClickListener(this);
@@ -118,9 +116,8 @@ public class AclubMainActivity extends AclubBaseActivity implements
 	}
 
 	private DrawerListener createDrawerToggle() {
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-				R.drawable.ic_drawer, R.string.navigation_drawer_open,
-				R.string.navigation_drawer_close) {
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer,
+				R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
 
 			@Override
 			public void onDrawerClosed(View view) {
@@ -141,19 +138,24 @@ public class AclubMainActivity extends AclubBaseActivity implements
 
 	private void moveDrawerToTop() {
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		DrawerLayout drawer = (DrawerLayout) inflater.inflate(
-				R.layout.drawer_navigator_layout, null); // "null" is important.
+		DrawerLayout drawer = (DrawerLayout) inflater.inflate(R.layout.drawer_navigator_layout, null); // "null"
+																										// is
+																										// important.
 
 		// HACK: "steal" the first child of decor view
 		ViewGroup decor = (ViewGroup) getWindow().getDecorView();
 		View child = decor.getChildAt(0);
 		decor.removeView(child);
-		LinearLayout container = (LinearLayout) drawer
-				.findViewById(R.id.drawer_content); // This is the container we
-													// defined just now.
+		LinearLayout container = (LinearLayout) drawer.findViewById(R.id.drawer_content); // This
+																							// is
+																							// the
+																							// container
+																							// we
+																							// defined
+																							// just
+																							// now.
 		container.addView(child, 0);
-		drawer.findViewById(R.id.drawer_linear_layout).setPadding(0,
-				getStatusBarHeight(), 0, 0);
+		drawer.findViewById(R.id.drawer_linear_layout).setPadding(0, getStatusBarHeight(), 0, 0);
 
 		// Make the drawer replace the first child
 		decor.addView(drawer);
@@ -161,8 +163,7 @@ public class AclubMainActivity extends AclubBaseActivity implements
 
 	public int getStatusBarHeight() {
 		int result = 0;
-		int resourceId = getResources().getIdentifier("status_bar_height",
-				"dimen", "android");
+		int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
 		if (resourceId > 0) {
 			result = getResources().getDimensionPixelSize(resourceId);
 		}
@@ -196,8 +197,7 @@ public class AclubMainActivity extends AclubBaseActivity implements
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		mDrawerLayout.closeDrawer(mDrawerList);
 		FragmentManager fragmentManager = getSupportFragmentManager();
 		FragmentTransaction ftx = fragmentManager.beginTransaction();
@@ -208,8 +208,7 @@ public class AclubMainActivity extends AclubBaseActivity implements
 			ftx.addToBackStack(null);
 			break;
 		case CommonValues.VOUCHER_BOX_DRAWER:
-			ftx.replace(R.id.main_content,
-					VoucherBoxFragment.newInstance(position + 1), "ONE");
+			ftx.replace(R.id.main_content, VoucherBoxFragment.newInstance(position + 1), "ONE");
 			ftx.addToBackStack(null);
 			break;
 		case CommonValues.SETTING_DRAWER:
@@ -224,11 +223,33 @@ public class AclubMainActivity extends AclubBaseActivity implements
 	}
 
 	private void displayLogoutDialog() {
-		
+		final CusDialogQuestion dialog = new CusDialogQuestion(AclubMainActivity.this, getString(R.string.logout_label),
+				getString(R.string.logout_question), getString(R.string.ok_label), getString(R.string.cancel_label));
+		dialog.setEvendialog(new EventDialog() {
+
+			@Override
+			public void onSubmit(String value) {
+				dialog.dismiss();
+				edt.putBoolean(SPConstants.LOGINED, false);
+				edt.commit();
+				Intent intent = new Intent(AclubMainActivity.this, MainActivity.class);
+				startActivity(intent);
+				finish();
+			}
+
+			@Override
+			public void onDismiss(int value) {
+
+			}
+
+			@Override
+			public void onCancel() {
+				dialog.dismiss();
+			}
+		});
+		dialog.show();
 	}
-	
-	
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 

@@ -113,6 +113,12 @@
     <string name="voucher_book_lable">Book now</string>
     <string name="voucher_booked_lable">Booked</string>
 
+    <!-- Logout function -->
+    <string name="logout_label">Logout</string>
+    <string name="logout_question">Do you really want to exist A Club?</string>
+    <string name="ok_label">OK</string>
+    <string name="cancel_label">Cancel</string>
+
     <string-array name="nav_items">
         <item>Menu 1st</item>
         <item>Menu 2nd</item>
