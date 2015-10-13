@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/news_iv"
+        android:layout_width="fill_parent"
+        android:layout_height="150dp"
+        android:layout_alignParentTop="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/news1" />
+
+    <TextView
+        android:id="@+id/news_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/news_iv"
+        android:layout_marginTop="8dp"
+        android:text="Những món nhất định phải thử khi đến Sài Gòn"
+        android:textColor="@android:color/black"
+        android:textSize="14dp" />
+
+</RelativeLayout>

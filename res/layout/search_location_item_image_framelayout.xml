@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <FrameLayout
+        android:id="@+id/search_loca_item_framelayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" >
+
+        <ImageView
+            android:id="@+id/search_loca_item_image_iv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/hot_sale_one" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp" >
+
+            <Button
+                android:id="@+id/search_rate_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="10dp"
+                android:background="@color/action_bar_background"
+                android:text="8.5"
+                android:textColor="@android:color/white" />
+
+            <ImageButton
+                android:id="@+id/search_hear_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@id/search_rate_button"
+                android:background="@drawable/search_hear_button_background"
+                android:src="@drawable/heart_icon" />
+        </RelativeLayout>
+    </FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/search_item_name_relative_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_loca_item_framelayout"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="10dp" >
+
+        <Button
+            android:id="@+id/search_item_book_table_button"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/aclub_first_fg_button_style"
+            android:gravity="center"
+            android:text="@string/search_book_label"
+            android:textColor="@android:color/white" />
+
+        <LinearLayout
+            android:id="@+id/search_item_name_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/search_item_book_table_button"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/search_item_name_textview"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Nha hang BBQ"
+                android:textColor="@android:color/black"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/search_item_price_textview"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="500,000 - 1,000,000 VND"
+                android:textColor="@color/action_bar_background"
+                android:textSize="12dp" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/search_item_detail_info_linearlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_item_name_relative_layout"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/search_item_address_textview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Dia chi: 126 trieu viet vuong Hai ba trung ha noi"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/search_item_time_active_textview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="8:00 AM - 12:00PM"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/search_item_website_textview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="www:sumoobbb"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/search_item_hotline_textview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="0979439395"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/search_item_active_status_textview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="20 da toi day - 30 binh luan - 2 chia se"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/search_item_button_linearlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/search_item_detail_info_linearlayout"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="6dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/search_item_call_button"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_weight="1"
+            android:background="@drawable/aclub_first_fg_button_style"
+            android:gravity="center"
+            android:text="@string/search_item_call_btn_label"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/search_button_text_size" />
+
+        <Button
+            android:id="@+id/search_item_sale_button"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_weight="1"
+            android:background="@drawable/aclub_first_fg_button_style"
+            android:gravity="center"
+            android:text="@string/search_item_sale_btn_label"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/search_button_text_size" />
+
+        <Button
+            android:id="@+id/search_item_discuss_button"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_weight="1"
+            android:background="@drawable/aclub_first_fg_button_style"
+            android:gravity="center"
+            android:text="@string/search_item_discuss_btn_label"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/search_button_text_size" />
+
+        <Button
+            android:id="@+id/search_item_share_button"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_weight="1"
+            android:background="@drawable/aclub_first_fg_button_style"
+            android:gravity="center"
+            android:text="@string/search_item_share_btn_label"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/search_button_text_size" />
+    </LinearLayout>
+
+</RelativeLayout>

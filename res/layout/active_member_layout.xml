@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <aclub.users.android.ui.cusimageview.RoundedImageView
+        android:id="@+id/member_avatar_iv"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="5dp"
+        android:src="@drawable/home_20" >
+    </aclub.users.android.ui.cusimageview.RoundedImageView>
+
+</RelativeLayout>

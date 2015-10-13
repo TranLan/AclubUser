@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="85dp" >
+
+    <TextView
+        android:id="@+id/location_num_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:text="1"
+        android:textColor="@android:color/black"
+        android:textSize="30dp" />
+
+    <ImageView
+        android:id="@+id/location_ava_iv"
+        android:layout_width="90dp"
+        android:layout_height="85dp"
+        android:layout_alignParentRight="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/fvr1" />
+
+    <RelativeLayout
+        android:id="@+id/location_title_rl"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toLeftOf="@id/location_ava_iv"
+        android:layout_toRightOf="@id/location_num_tv" >
+
+        <TextView
+            android:id="@+id/location_name_tv"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="Nha hang la vong"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/location_des_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/location_name_tv"
+            android:text="Buffet hai san tuoi song" />
+
+        <ImageView
+            android:id="@+id/location_star_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/location_name_tv"
+            android:layout_marginLeft="3dp"
+            android:layout_toRightOf="@id/location_des_tv"
+            android:src="@drawable/location_star" />
+
+        <TextView
+            android:id="@+id/location_rate_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/location_name_tv"
+            android:layout_marginLeft="3dp"
+            android:layout_toRightOf="@id/location_star_iv"
+            android:text="9.3"
+            android:textColor="@color/action_bar_background" />
+    </RelativeLayout>
+
+</RelativeLayout>

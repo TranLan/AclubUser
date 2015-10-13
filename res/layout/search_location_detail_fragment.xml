@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollview_location_detail_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:scrollbars="none" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <fragment
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/detail_location_map_height"
+            class="com.google.android.gms.maps.SupportMapFragment" />
+
+        <RelativeLayout
+            android:id="@+id/detail_restaurance_relativelayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/map"
+            android:layout_marginTop="10dp" >
+
+            <aclub.users.android.ui.cusimageview.RoundedImageView
+                android:id="@+id/detail_restaturance_avatar_roundeiv"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/home_15" />
+
+            <LinearLayout
+                android:id="@+id/detail_restaturance_info_linearlayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@id/detail_restaturance_avatar_roundeiv"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/detail_restaturance_info_name_textview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Nha Hang SUMO BBQ"
+                    android:textColor="@android:color/black" />
+
+                <TextView
+                    android:id="@+id/detail_restaturance_info_address_textview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Dia chi: 126 trieu viet vuong Hai ba trung ha noi" />
+
+                <TextView
+                    android:id="@+id/detail_restaturance_info_time_active_textview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="8:00 AM - 12:00PM" />
+
+                <TextView
+                    android:id="@+id/detail_restaturance_info_website_textview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="www:sumoobbb" />
+
+                <TextView
+                    android:id="@+id/detail_restaturance_info_hotline_textview"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:text="0979439395" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/detail_restaurance_info_control_linearlayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detail_restaturance_info_linearlayout"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="7dp" >
+
+                <Button
+                    android:id="@+id/detail_restaurance_info_rate_button"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="0.6"
+                    android:background="@color/action_bar_background"
+                    android:text="8.5"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/detail_restaurance_info_book_button"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/action_bar_background"
+                    android:text="@string/search_book_label"
+                    android:textColor="@android:color/white" />
+
+                <ImageButton
+                    android:id="@+id/detail_restaurance_info_rate_heart_button"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="0.6"
+                    android:background="@drawable/search_hear_button_background"
+                    android:src="@drawable/heart_icon" />
+
+                <Button
+                    android:id="@+id/detail_restaurance_info_call_button"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/action_bar_background"
+                    android:text="@string/search_item_call_btn_label"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/detail_restaurance_info_email_button"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/action_bar_background"
+                    android:text="@string/search_item_email_btn_label"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/detail_restaurance_info_image_linearlayout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detail_restaurance_info_control_linearlayout"
+                android:layout_marginTop="10dp" >
+
+                <ImageView
+                    android:id="@+id/detail_res_info_image_one_imagview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/hot_sale_one" />
+
+                <ImageView
+                    android:id="@+id/detail_res_info_image_two_imagview"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/hot_sale_two" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/detail_restaurance_info_image_linearlayout"
+                android:layout_marginTop="10dp" >
+
+                <Button
+                    android:id="@+id/detail_res_info_rate_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Danh gia" />
+
+                <Button
+                    android:id="@+id/detail_res_info_sale_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Khuyen mai" />
+
+                <Button
+                    android:id="@+id/detail_res_info_discuss_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Binh luan" />
+
+                <Button
+                    android:id="@+id/detail_res_info_menu_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Menu" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</ScrollView>

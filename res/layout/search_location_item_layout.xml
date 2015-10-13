@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+
+    <aclub.users.android.ui.cusimageview.RoundedImageView
+        android:id="@+id/search_loca_item_result_avatar_iv"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="5dp"
+        android:src="@drawable/home_15" />
+
+    <LinearLayout
+        android:id="@+id/search_loca_item_result_infor_linearlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/search_loca_item_result_avatar_iv"
+        android:gravity="center_vertical"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/search_loca_item_result_infor_name_textview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Nha hang Ba con sau"
+            android:textColor="@android:color/black"
+            android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/search_loca_item_result_infor_address_textview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="126 trieu viet vuong, hai ba trung, ha noi"
+            android:textSize="12dp" />
+    </LinearLayout>
+
+</RelativeLayout>

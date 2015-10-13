@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <RelativeLayout
+            android:id="@+id/searching_block_relative_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/search_restaurance_block_height"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/white" >
+
+            <Button
+                android:id="@+id/search_restaurance_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/search_restaurance_buton_height"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/search_edt_martin_left_right"
+                android:background="@drawable/search_button_background_style"
+                android:text="@string/search_label"
+                android:textColor="@android:color/white" />
+
+            <EditText
+                android:id="@+id/search_restaurance_edt"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/search_restaurance_buton_height"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/search_edt_martin_left_right"
+                android:layout_marginRight="@dimen/search_edt_martin_left_right"
+                android:layout_toLeftOf="@id/search_restaurance_btn"
+                android:background="@drawable/round_search_restaurance_edt"
+                android:hint="@string/search_by_name"
+                android:paddingLeft="@dimen/search_edt_pading_left" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/search_resutl_total_relativelayout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/searching_block_relative_layout"
+            android:layout_marginBottom="@dimen/search_resutl_total_block_martin_top"
+            android:layout_marginTop="@dimen/search_resutl_total_block_martin_top" >
+
+            <ImageView
+                android:id="@+id/search_resutl_total_iv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/search_edt_martin_left_right"
+                android:src="@drawable/drawer_brands" />
+
+            <TextView
+                android:id="@+id/search_result_total_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/search_edt_martin_left_right"
+                android:layout_toRightOf="@id/search_resutl_total_iv"
+                android:text="Có 20 địa điểm hữu ích ngay gần vị trí hiện tại của bạn. Hi vọng sẽ hữu ích cho bạn"
+                android:textColor="@android:color/black" />
+        </RelativeLayout>
+
+        <!--
+        <RelativeLayout
+            android:id="@+id/location_one_relativelayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/search_resutl_total_relativelayout"
+            android:layout_marginTop="20dp" >
+
+            <include
+                android:id="@+id/image_location_one_include_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                layout="@layout/search_location_item_image_framelayout" />
+
+            <include
+                android:id="@+id/image_location_two_include_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image_location_one_include_layout"
+                android:layout_marginTop="10dp"
+                layout="@layout/search_location_item_image_framelayout" />
+
+            <include
+                android:id="@+id/image_location_three_include_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/image_location_two_include_layout"
+                android:layout_marginTop="10dp"
+                layout="@layout/search_location_item_image_framelayout" />
+        </RelativeLayout>
+        -->
+
+        <ListView
+            android:id="@+id/search_loca_listview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/search_resutl_total_relativelayout"
+            android:background="@android:color/white" >
+        </ListView>
+    </RelativeLayout>
+
+</RelativeLayout>
