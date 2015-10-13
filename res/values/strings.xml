@@ -112,6 +112,7 @@
     <string name="voucher_total_result_label">Co 20 khuyen mai dang duoc phat hanh gan vi tri ban. Hay tham gia ngay cung chung toi !!!</string>
     <string name="voucher_book_lable">Book now</string>
     <string name="voucher_booked_lable">Booked</string>
+
     <string-array name="nav_items">
         <item>Menu 1st</item>
         <item>Menu 2nd</item>

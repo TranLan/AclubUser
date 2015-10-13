@@ -47,8 +47,9 @@
     <dimen name="search_edt_martin_left_right">10dp</dimen>
     <dimen name="search_edt_pading_left">10dp</dimen>
     <dimen name="search_resutl_total_block_martin_top">7dp</dimen>
-	<dimen name="search_button_text_size">13dp</dimen>
-	
-	<!-- Detail Location dimen -->
-	<dimen name="detail_location_map_height">240dp</dimen>
+    <dimen name="search_button_text_size">13dp</dimen>
+
+    <!-- Detail Location dimen -->
+    <dimen name="detail_location_map_height">240dp</dimen>
+
 </resources>

@@ -27,11 +27,11 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/put_your_num_tv"
-        android:inputType="number"
         android:layout_marginLeft="@dimen/spinner_country_martin_left"
         android:layout_marginRight="@dimen/spinner_country_martin_left"
         android:layout_marginTop="@dimen/register_default_martin_top"
         android:hint="@string/number_phone"
+        android:inputType="number"
         android:textColor="@android:color/black" />
 
     <TextView

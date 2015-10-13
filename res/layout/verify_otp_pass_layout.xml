@@ -18,8 +18,8 @@
         android:layout_below="@id/action_bar_verify_otp_layout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/spinner_country_martin_top"
-        android:text=""
         android:gravity="center_horizontal"
+        android:text=""
         android:textColor="@android:color/black"
         android:textSize="@dimen/otp_pass_text_size"
         android:textStyle="bold" />

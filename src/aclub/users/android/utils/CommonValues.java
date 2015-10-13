@@ -20,6 +20,7 @@ public class CommonValues {
 	public static final int HOME_DRAWER = 1;
 	public static final int VOUCHER_BOX_DRAWER = 2;
 	public static final int DEFAULT_DRAWER = HOME_DRAWER;
+	public static final int SETTING_DRAWER = 11;
 	
 	public static final boolean TEST = true;
 }

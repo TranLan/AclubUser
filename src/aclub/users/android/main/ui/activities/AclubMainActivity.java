@@ -212,6 +212,9 @@ public class AclubMainActivity extends AclubBaseActivity implements
 					VoucherBoxFragment.newInstance(position + 1), "ONE");
 			ftx.addToBackStack(null);
 			break;
+		case CommonValues.SETTING_DRAWER:
+			displayLogoutDialog();
+			break;
 		default:
 			ftx.replace(R.id.main_content, new AclubFirstFragament(), "ONE");
 			ftx.addToBackStack(null);
@@ -220,6 +223,12 @@ public class AclubMainActivity extends AclubBaseActivity implements
 		ftx.commit();
 	}
 
+	private void displayLogoutDialog() {
+		
+	}
+	
+	
+	
 	/*
 	 * (non-Javadoc)
 	 * 
