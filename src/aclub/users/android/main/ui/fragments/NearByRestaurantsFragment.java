@@ -13,6 +13,7 @@ import aclub.users.android.httpservices.models.BaseResponse;
 import aclub.users.android.httpservices.models.NearByRestaurantsResponse;
 import aclub.users.android.log.DLog;
 import aclub.users.android.main.ui.cusview.SearchLocationAdapter;
+import aclub.users.android.utils.AnimationUtils;
 import aclub.users.android.utils.CommonValues;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -54,14 +55,15 @@ public class NearByRestaurantsFragment extends Fragment implements
 	protected String latitude, longitude;
 	protected int radius;
 	protected int paging;
+	public static int currentRestaurantId = 0;
 
-	private ListView lvSearchResutl;
-	private ArrayList<NearByRestaurantsResponse> listLocaResutl;
-	private SearchLocationAdapter locaAdapter;
+	private ListView resultListView;
+	// private ArrayList<NearByRestaurantsResponse> listLocaResutl;
+	private SearchLocationAdapter adapter;
 	private View rootView;
 	private Button searchResBtn;
 
-	private ArrayList<NearByRestaurantsResponse> listNearByRest;
+	private ArrayList<NearByRestaurantsResponse> listDb;
 
 	public static NearByRestaurantsFragment newInstance(int sectionNumber) {
 		NearByRestaurantsFragment fragment = new NearByRestaurantsFragment();
@@ -80,19 +82,20 @@ public class NearByRestaurantsFragment extends Fragment implements
 		rootView = inflater.inflate(R.layout.search_location_fragment,
 				container, false);
 		initUI(rootView);
+
 		getNearByRestaurants();
 		return rootView;
 	}
 
 	private void getNearByRestaurants() {
-		showDialogLoading();
+		CommonValues.showDialogLoading(getActivity());
 		if (CommonValues.TEST) {
-			latitude = "21.062592";
+			latitude = "21.022592";
 			longitude = "105.852392";
 		}
 		paging = 1;
 		radius = 100;
-		listNearByRest = new ArrayList<NearByRestaurantsResponse>();
+		listDb = new ArrayList<NearByRestaurantsResponse>();
 		RestHelper.getInstance().getNearByRestaurants(getActivity(), latitude,
 				longitude, radius, paging, new ResponseHandler() {
 
@@ -100,12 +103,15 @@ public class NearByRestaurantsFragment extends Fragment implements
 					public void onSuccess(ArrayList<BaseResponse> responses,
 							boolean isJSONArrayFB) {
 						DLog.d("OK" + responses.size());
+						listDb.clear();
+						ArrayList<NearByRestaurantsResponse> list = new ArrayList<NearByRestaurantsResponse>();
 						for (int i = 0; i < responses.size(); i++) {
 							NearByRestaurantsResponse nearby = (NearByRestaurantsResponse) responses
 									.get(i);
-							listNearByRest.add(nearby);
+							list.add(nearby);
 						}
-						hideDialogLoading();
+						listDb = list;
+						CommonValues.hideDialogLoading();
 						initDataFromServer();
 					}
 
@@ -116,17 +122,74 @@ public class NearByRestaurantsFragment extends Fragment implements
 
 					@Override
 					public void onError(ErrorMessage error) {
-						hideDialogLoading();
+						CommonValues.hideDialogLoading();
 						DLog.d("ERROR L ");
-						;
 					}
 				});
 	}
 
 	private void initDataFromServer() {
-		locaAdapter = new SearchLocationAdapter(listNearByRest, getActivity());
-		lvSearchResutl.setAdapter(locaAdapter);
-		lvSearchResutl.setOnItemClickListener(new OnItemClickListener() {
+		adapter = new SearchLocationAdapter(listDb, getActivity());
+		resultListView.setAdapter(adapter);
+		resultListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View view,
+					int position, long arg3) {
+				NearByRestaurantsResponse item = (NearByRestaurantsResponse) ((SearchLocationAdapter) adapter
+						.getAdapter()).getItem(position);
+				currentRestaurantId = item.getId();
+				final FragmentTransaction ft = getActivity()
+						.getSupportFragmentManager().beginTransaction();
+				ft.replace(R.id.main_content,
+						DetailRestaurantFragment.newInstance(1),
+						"NewFragmentTag");
+				ft.addToBackStack(null);
+				ft.commit();
+
+			}
+
+		});
+	}
+
+	private void initUI(View view) {
+		searchResEdt = (EditText) view
+				.findViewById(R.id.search_restaurance_edt);
+		// searchResEdt.addTextChangedListener(new TextWatcher() {
+		//
+		// @Override
+		// public void onTextChanged(CharSequence s, int start, int before,
+		// int count) {
+		// if (adapter != null && searchResEdt != null
+		// && searchResEdt.getText() != null) {
+		// listDb = adapter.search(searchResEdt.getText().toString());
+		// adapter.notifyDataSetChanged();
+		// }
+		// }
+		//
+		// @Override
+		// public void beforeTextChanged(CharSequence s, int start, int count,
+		// int after) {
+		//
+		// }
+		//
+		// @Override
+		// public void afterTextChanged(Editable s) {
+		// if (adapter != null && searchResEdt != null
+		// && searchResEdt.getText() != null) {
+		// listDb = adapter.search(searchResEdt.getText().toString());
+		// adapter.notifyDataSetChanged();
+		// }
+		// }
+		// });
+		searchResBtn = (Button) view.findViewById(R.id.search_restaurance_btn);
+		searchResBtn.setOnClickListener(this);
+		resultListView = (ListView) view
+				.findViewById(R.id.search_loca_listview);
+		listDb = new ArrayList<NearByRestaurantsResponse>();
+		adapter = new SearchLocationAdapter(listDb, getActivity());
+		resultListView.setAdapter(adapter);
+		resultListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view,
@@ -144,65 +207,6 @@ public class NearByRestaurantsFragment extends Fragment implements
 			}
 
 		});
-	}
-
-	protected ProgressDialog dialog;
-
-	protected void showDialogLoading() {
-		if (dialog == null) {
-			dialog = new ProgressDialog(getActivity());
-			dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-			dialog.setMessage("Loading. Please wait...");
-			dialog.setIndeterminate(true);
-			dialog.setCanceledOnTouchOutside(false);
-		}
-		if (dialog != null && !dialog.isShowing()) {
-			dialog.show();
-		}
-	}
-
-	public void hideDialogLoading() {
-		if (dialog != null && dialog.isShowing()) {
-			dialog.dismiss();
-		}
-	}
-
-	private void initUI(View view) {
-		searchResEdt = (EditText) view
-				.findViewById(R.id.search_restaurance_edt);
-		searchResEdt.addTextChangedListener(new TextWatcher() {
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-				if (locaAdapter != null && searchResEdt != null
-						&& searchResEdt.getText() != null) {
-					listLocaResutl = locaAdapter.search(searchResEdt.getText()
-							.toString());
-					locaAdapter.notifyDataSetChanged();
-				}
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-				if (locaAdapter != null && searchResEdt != null
-						&& searchResEdt.getText() != null) {
-					listLocaResutl = locaAdapter.search(searchResEdt.getText()
-							.toString());
-					locaAdapter.notifyDataSetChanged();
-				}
-			}
-		});
-		searchResBtn = (Button) view.findViewById(R.id.search_restaurance_btn);
-		searchResBtn.setOnClickListener(this);
-		lvSearchResutl = (ListView) view
-				.findViewById(R.id.search_loca_listview);
 	}
 
 	private void initListLocaResut() {
@@ -382,30 +386,54 @@ public class NearByRestaurantsFragment extends Fragment implements
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.search_restaurance_btn:
-			RestHelper.getInstance().getRestaurantByName(getActivity(),
-					latitude, longitude, radius, paging, "beer",
-					new ResponseHandler() {
+			String name = searchResEdt.getText().toString();
+			if (name != null && name.length() > 0) {
+				CommonValues.showDialogLoading(getActivity());
+				if (CommonValues.TEST) {
+					name = "cafe";
+					latitude = "21.022592";
+					longitude = "105.852392";
+					paging = 1;
+					radius = 100;
+				}
+				RestHelper.getInstance().getRestaurantByName(getActivity(),
+						latitude, longitude, radius, paging, name,
+						new ResponseHandler() {
 
-						@Override
-						public void onSuccess(
-								ArrayList<BaseResponse> responses,
-								boolean isJSONArrayFB) {
-							// TODO Auto-generated method stub
+							@Override
+							public void onSuccess(
+									ArrayList<BaseResponse> responses,
+									boolean isJSONArrayFB) {
+								CommonValues.hideDialogLoading();
+								listDb.clear();
+								ArrayList<NearByRestaurantsResponse> list = new ArrayList<NearByRestaurantsResponse>();
+								for (int i = 0; i < responses.size(); i++) {
+									NearByRestaurantsResponse nearby = (NearByRestaurantsResponse) responses
+											.get(i);
+									list.add(nearby);
+								}
+								listDb = list;
+								CommonValues.hideDialogLoading();
+								initDataFromServer();
+							}
 
-						}
+							@Override
+							public void onSuccess(BaseResponse response) {
 
-						@Override
-						public void onSuccess(BaseResponse response) {
-							// TODO Auto-generated method stub
+							}
 
-						}
+							@Override
+							public void onError(ErrorMessage error) {
+								DLog.d(error.getMessage());
+								CommonValues.hideDialogLoading();
+							}
+						});
+			} else {
+				searchResEdt
+						.setError(getString(R.string.error_register_infor_message));
+				AnimationUtils.shake(getActivity(), searchResEdt);
+			}
 
-						@Override
-						public void onError(ErrorMessage error) {
-							// TODO Auto-generated method stub
-
-						}
-					});
 		default:
 			break;
 		}

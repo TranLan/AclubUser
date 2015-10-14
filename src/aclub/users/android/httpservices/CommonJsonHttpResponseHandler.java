@@ -16,6 +16,7 @@ import aclub.users.android.httpservices.models.NearByRestaurantsResponse;
 import aclub.users.android.httpservices.models.SampleResponse;
 import aclub.users.android.httpservices.models.User;
 import aclub.users.android.httpservices.models.UserRegister;
+import aclub.users.android.httpservices.models.VoucherResponse;
 import aclub.users.android.log.DLog;
 import aclub.users.android.utils.StringUtils;
 
@@ -141,7 +142,6 @@ public class CommonJsonHttpResponseHandler extends JsonHttpResponseHandler {
 
 	private void handleSuccess(int statusCode, Header[] headers,
 			JSONArray responJson) {
-		DLog.d("handleSuccess");
 		switch (_requestType) {
 		case Constants.ApiConst.NEAR_BY_RESTAURANTS:
 			responseSuccess("NEAR_BY_RESTAURANTS", statusCode, responJson,
@@ -150,6 +150,10 @@ public class CommonJsonHttpResponseHandler extends JsonHttpResponseHandler {
 		case Constants.ApiConst.RESTAURANTS_BY_NAME:
 			responseSuccess("RESTAURANTS_BY_NAME", statusCode, responJson,
 					NearByRestaurantsResponse.class);
+			break;
+		case Constants.ApiConst.VOUCHER:
+			responseSuccess("VOUCHER", statusCode, responJson,
+					VoucherResponse.class);
 			break;
 		default:
 			break;

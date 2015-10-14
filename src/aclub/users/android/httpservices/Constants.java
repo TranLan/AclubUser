@@ -20,6 +20,7 @@ public class Constants {
 		String LOGIN_PHONE = "sessions/";
 		String RESENT_OTP_PASS = "sessions/request_phone_verification_token";
 		String NEAR_BY_RESTAURANTS = "venues";
+		String VOUCHER = "coupons";
 	}
 
 	long TIME_REQUEST_SERVER = 30 * 1000; // 30 minutes request to server to get
@@ -30,6 +31,7 @@ public class Constants {
 		int NEAR_BY_RESTAURANTS = 1;
 		int DETAIL_RESTAURANT = 2;
 		int RESTAURANTS_BY_NAME = 3;
+		int VOUCHER = 4;
 		int PHONE_REGISTRAION = 7;
 		int PHONE_VERIFICATION_TOKEN = 8;
 		int PHONE_UPDATE_EMAIL = 9;

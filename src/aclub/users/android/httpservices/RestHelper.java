@@ -264,7 +264,12 @@ public class RestHelper {
     	RestClient.get(context, apiUrl, null, handler, true);
     }
     
-    
+    public void getVoucher(Context context, final ResponseHandler responseHandler) {
+    	String apiUrl = Constants.HttpConst.VOUCHER;
+    	DLog.d(apiUrl);
+    	JsonHttpResponseHandler handler = new CommonJsonHttpResponseHandler(responseHandler, Constants.ApiConst.VOUCHER);
+    	RestClient.get(context, apiUrl, null, handler, true); 
+    }
     
     
 }

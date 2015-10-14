@@ -18,6 +18,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -38,6 +39,9 @@ public class DetailRestaurantFragment extends Fragment {
 	static final LatLng KIEL = new LatLng(53.551, 9.993);
 	private GoogleMap map;
 	private View rootView;
+	private TextView resName;
+	private TextView resInfo;
+	private TextView resAddress;
 
 	/**
 	 * Returns a new instance of this fragment for the given section number.
@@ -58,14 +62,15 @@ public class DetailRestaurantFragment extends Fragment {
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.search_location_detail_fragment,
 				container, false);
-		RestHelper.getInstance().getDetailRestaurant(getActivity(), 198,
+		RestHelper.getInstance().getDetailRestaurant(getActivity(),
+				NearByRestaurantsFragment.currentRestaurantId,
 				new ResponseHandler() {
 
 					@Override
 					public void onSuccess(ArrayList<BaseResponse> responses,
 							boolean isJSONArrayFB) {
 						DLog.d("getDetailRestaurant OK");
-					
+
 					}
 
 					@Override
@@ -98,6 +103,13 @@ public class DetailRestaurantFragment extends Fragment {
 	}
 
 	private void initUI(NearByRestaurantsResponse res) {
+		resName = (TextView) rootView
+				.findViewById(R.id.detail_restaturance_info_name_textview);
+		resInfo = (TextView) rootView
+				.findViewById(R.id.detail_restaturance_info_address_textview);
+		resName.setText(res.getName());
+		resInfo.setText(res.getFullAddress());
+		
 		if (map == null) {
 			map = ((SupportMapFragment) getChildFragmentManager()
 					.findFragmentById(R.id.map)).getMap();
@@ -115,17 +127,17 @@ public class DetailRestaurantFragment extends Fragment {
 		}
 		LatLng RES_LOCATION = new LatLng(Double.parseDouble(res.getLatitude()),
 				Double.parseDouble(res.getLogitude()));
-		Marker hamburg = map.addMarker(new MarkerOptions().position(RES_LOCATION)
-				.title(res.getName()));
-//		Marker kiel = map.addMarker(new MarkerOptions()
-//				.position(KIEL)
-//				.title("Kiel")
-//				.snippet("Kiel is cool")
-//				.icon(BitmapDescriptorFactory
-//						.fromResource(R.drawable.ic_launcher)));
+		Marker hamburg = map.addMarker(new MarkerOptions().position(
+				RES_LOCATION).title(res.getName()));
+		// Marker kiel = map.addMarker(new MarkerOptions()
+		// .position(KIEL)
+		// .title("Kiel")
+		// .snippet("Kiel is cool")
+		// .icon(BitmapDescriptorFactory
+		// .fromResource(R.drawable.ic_launcher)));
 
 		// Move the camera instantly to hamburg with a zoom of 15.
-		 map.moveCamera(CameraUpdateFactory.newLatLngZoom(RES_LOCATION, 15));
+		map.moveCamera(CameraUpdateFactory.newLatLngZoom(RES_LOCATION, 15));
 
 		// Zoom in, animating the camera.
 		// map.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);

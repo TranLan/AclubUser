@@ -6,12 +6,20 @@ package aclub.users.android.main.ui.fragments;
 import java.util.ArrayList;
 
 import aclub.users.android.R;
+import aclub.users.android.httpservices.ErrorMessage;
+import aclub.users.android.httpservices.ResponseHandler;
+import aclub.users.android.httpservices.RestHelper;
+import aclub.users.android.httpservices.models.BaseResponse;
+import aclub.users.android.httpservices.models.VoucherResponse;
 import aclub.users.android.log.DLog;
 import aclub.users.android.main.models.VoucherItem;
 import aclub.users.android.main.ui.cusview.VoucherAdapter;
+import aclub.users.android.utils.CommonValues;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +39,7 @@ public class VoucherBoxFragment extends Fragment implements
 	private static final String ARG_SECTION_NUMBER = "section_number";
 
 	private ListView voucherListView;
-	private ArrayList<VoucherItem> listVoucher;
+	private ArrayList<VoucherResponse> listVoucher;
 	private VoucherAdapter voucherAdapter;
 	private RelativeLayout voucherHeaderLayout;
 	private EditText searchVoucherEdt;
@@ -39,7 +47,7 @@ public class VoucherBoxFragment extends Fragment implements
 	private TextView searchVoucherResultTv;
 
 	public interface BookInterface {
-		void onBookVoucher(VoucherItem item);
+		void onBookVoucher(VoucherResponse item);
 	}
 
 	private BookInterface bookListener;
@@ -71,62 +79,108 @@ public class VoucherBoxFragment extends Fragment implements
 
 	private void initListView(View view) {
 		voucherListView = (ListView) view.findViewById(R.id.voucher_listview);
-		listVoucher = new ArrayList<VoucherItem>();
-
-		listVoucher
-				.add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
-						"300,000 VND/kg", "Nhà hàng Trung hoa",
-						R.drawable.hot_sale_one));
-		listVoucher
-				.add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
-						"300,000 VND/kg", "Nhà hàng Trung hoa",
-						R.drawable.hot_sale_one));
-		listVoucher
-				.add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
-						"300,000 VND/kg", "Nhà hàng Trung hoa",
-						R.drawable.hot_sale_one));
-		listVoucher
-				.add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
-						"300,000 VND/kg", "Nhà hàng Trung hoa",
-						R.drawable.hot_sale_one));
-		listVoucher
-				.add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
-						"300,000 VND/kg", "Nhà hàng Trung hoa",
-						R.drawable.hot_sale_one));
-		listVoucher
-				.add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
-						"300,000 VND/kg", "Nhà hàng Trung hoa",
-						R.drawable.hot_sale_one));
-		listVoucher
-				.add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
-						"300,000 VND/kg", "Nhà hàng Trung hoa",
-						R.drawable.hot_sale_one));
-		listVoucher
-				.add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
-						"300,000 VND/kg", "Nhà hàng Trung hoa",
-						R.drawable.hot_sale_one));
-		listVoucher
-				.add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
-						"300,000 VND/kg", "Nhà hàng Trung hoa",
-						R.drawable.hot_sale_one));
-		listVoucher
-				.add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
-						"300,000 VND/kg", "Nhà hàng Trung hoa",
-						R.drawable.hot_sale_one));
-		listVoucher
-				.add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
-						"300,000 VND/kg", "Nhà hàng Trung hoa",
-						R.drawable.hot_sale_one));
-
-		voucherAdapter = new VoucherAdapter(listVoucher, getActivity(),
-				new BookInterface() {
+		listVoucher = new ArrayList<VoucherResponse>();
+		CommonValues.showDialogLoading(getActivity());
+		RestHelper.getInstance().getVoucher(getActivity(),
+				new ResponseHandler() {
 
 					@Override
-					public void onBookVoucher(VoucherItem item) {
-						DLog.d("onClick : " + item.getVoucherName());
+					public void onSuccess(ArrayList<BaseResponse> responses,
+							boolean isJSONArrayFB) {
+						listVoucher.clear();
+						for (int i = 0; i < responses.size(); i++) {
+							VoucherResponse vr = (VoucherResponse) responses
+									.get(i);
+							listVoucher.add(vr);
+						}
+						voucherAdapter = new VoucherAdapter(listVoucher,
+								getActivity(), new BookInterface() {
+
+									@Override
+									public void onBookVoucher(
+											VoucherResponse item) {
+										FragmentManager fm = getActivity()
+												.getSupportFragmentManager();
+										FragmentTransaction ft = fm
+												.beginTransaction();
+										ft.replace(R.id.main_content,
+												VoucherDetailFragment
+														.newInstance(0));
+										ft.addToBackStack(null);
+										ft.commit();
+									}
+								});
+						voucherListView.setAdapter(voucherAdapter);
+						CommonValues.hideDialogLoading();
+					}
+
+					@Override
+					public void onSuccess(BaseResponse response) {
+						// TODO Auto-generated method stub
+
+					}
+
+					@Override
+					public void onError(ErrorMessage error) {
+						// TODO Auto-generated method stub
+
 					}
 				});
-		voucherListView.setAdapter(voucherAdapter);
+
+		// listVoucher
+		// .add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
+		// "300,000 VND/kg", "Nhà hàng Trung hoa",
+		// R.drawable.hot_sale_one));
+		// listVoucher
+		// .add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
+		// "300,000 VND/kg", "Nhà hàng Trung hoa",
+		// R.drawable.hot_sale_one));
+		// listVoucher
+		// .add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
+		// "300,000 VND/kg", "Nhà hàng Trung hoa",
+		// R.drawable.hot_sale_one));
+		// listVoucher
+		// .add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
+		// "300,000 VND/kg", "Nhà hàng Trung hoa",
+		// R.drawable.hot_sale_one));
+		// listVoucher
+		// .add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
+		// "300,000 VND/kg", "Nhà hàng Trung hoa",
+		// R.drawable.hot_sale_one));
+		// listVoucher
+		// .add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
+		// "300,000 VND/kg", "Nhà hàng Trung hoa",
+		// R.drawable.hot_sale_one));
+		// listVoucher
+		// .add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
+		// "300,000 VND/kg", "Nhà hàng Trung hoa",
+		// R.drawable.hot_sale_one));
+		// listVoucher
+		// .add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
+		// "300,000 VND/kg", "Nhà hàng Trung hoa",
+		// R.drawable.hot_sale_one));
+		// listVoucher
+		// .add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
+		// "300,000 VND/kg", "Nhà hàng Trung hoa",
+		// R.drawable.hot_sale_one));
+		// listVoucher
+		// .add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
+		// "300,000 VND/kg", "Nhà hàng Trung hoa",
+		// R.drawable.hot_sale_one));
+		// listVoucher
+		// .add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
+		// "300,000 VND/kg", "Nhà hàng Trung hoa",
+		// R.drawable.hot_sale_one));
+		//
+		// voucherAdapter = new VoucherAdapter(listVoucher, getActivity(),
+		// new BookInterface() {
+		//
+		// @Override
+		// public void onBookVoucher(VoucherItem item) {
+		// DLog.d("onClick : " + item.getVoucherName());
+		// }
+		// });
+		// voucherListView.setAdapter(voucherAdapter);
 	}
 
 	private void initHeader(View view) {

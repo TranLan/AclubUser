@@ -6,6 +6,7 @@ package aclub.users.android.main.ui.cusview;
 import java.util.ArrayList;
 
 import aclub.users.android.R;
+import aclub.users.android.httpservices.models.VoucherResponse;
 import aclub.users.android.main.models.HotSaleItem;
 import aclub.users.android.main.models.VoucherItem;
 import aclub.users.android.main.ui.cusview.HotSaleAdapter.ViewHolder;
@@ -26,12 +27,12 @@ import android.widget.TextView;
  */
 public class VoucherAdapter extends BaseAdapter {
 
-	private ArrayList<VoucherItem> originalList;
-	private ArrayList<VoucherItem> searchList;
+	private ArrayList<VoucherResponse> originalList;
+	private ArrayList<VoucherResponse> searchList;
 	private Context context;
 	private VoucherBoxFragment.BookInterface handler;
 
-	public VoucherAdapter(ArrayList<VoucherItem> list, Context context,
+	public VoucherAdapter(ArrayList<VoucherResponse> list, Context context,
 			VoucherBoxFragment.BookInterface handler) {
 		this.originalList = list;
 		this.searchList = list;
@@ -106,19 +107,19 @@ public class VoucherAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) view.getTag();
 		}
-		final VoucherItem item = searchList.get(position);
-		holder.itemPrice.setText(item.getVoucherPrice());
-		holder.itemRes.setText(item.getVoucherRestaurance());
-		holder.itemTitle.setText(item.getVoucherName());
+		final VoucherResponse item = searchList.get(position);
+		holder.itemPrice.setText(item.getCode());
+		holder.itemRes.setText(item.getShortDesc());
+		holder.itemTitle.setText(item.getVenue().getName());
 		holder.image.setImageDrawable(view.getResources().getDrawable(
-				item.getVoucherRes()));
+				R.drawable.hot_sale_one));
 		holder.itemConfirm.setText(context
 				.getString(R.string.voucher_book_lable));
 		holder.itemConfirm.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				if(handler != null) {
+				if (handler != null) {
 					handler.onBookVoucher(item);
 				}
 			}
