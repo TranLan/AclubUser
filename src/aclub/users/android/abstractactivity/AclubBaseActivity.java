@@ -10,15 +10,16 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * @author ntdong2012
  *
  */
-public class AclubBaseActivity extends FragmentActivity implements
-		OnClickListener {
+public class AclubBaseActivity extends FragmentActivity implements OnClickListener {
 
 	protected ImageView mSearchAbIv, mDrawerNaviAbIv;
+	protected TextView mTitleAbTv;
 
 	/*
 	 * (non-Javadoc)
@@ -32,12 +33,13 @@ public class AclubBaseActivity extends FragmentActivity implements
 	}
 
 	protected void initActionBar(View view) {
-//		mCamIv = (ImageView) findViewById(R.id.action_bar_cam_iv);
+		// mCamIv = (ImageView) findViewById(R.id.action_bar_cam_iv);
 		mSearchAbIv = (ImageView) findViewById(R.id.action_bar_search_iv);
 		mDrawerNaviAbIv = (ImageView) findViewById(R.id.action_bar_drawer_iv);
-//		mCamIv.setOnClickListener(this);
+		// mCamIv.setOnClickListener(this);
 		mSearchAbIv.setOnClickListener(this);
 		mDrawerNaviAbIv.setOnClickListener(this);
+		mTitleAbTv = (TextView) view.findViewById(R.id.action_bar_logo_iv);
 	}
 
 	/*

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+    <TextView
+        android:id="@+id/add_friend_textview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:text="Moi ban"
+        android:textAllCaps="true"
+        android:textColor="@color/action_bar_background"
+        android:textSize="20dp" />
+
+    <View
+        android:id="@+id/view_one"
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/add_friend_textview"
+        android:layout_marginTop="7dp"
+        android:background="@android:color/background_dark" >
+    </View>
+
+    <RelativeLayout
+        android:id="@+id/add_friend_email_relative_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="37dp"
+        android:layout_below="@id/view_one"
+        android:layout_marginTop="5dp" >
+
+        <ImageView
+            android:id="@+id/add_friend_email_imageview"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/email_drawable" />
+
+        <TextView
+            android:id="@+id/add_friend_email_textview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/add_friend_email_imageview"
+            android:text="Moi ban qua Email"
+            android:textColor="@android:color/black"
+            android:textSize="18dp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view_two"
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/add_friend_email_relative_layout"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/background_dark" />
+
+    <RelativeLayout
+        android:id="@+id/add_friend_sms_relative_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="37dp"
+        android:layout_below="@id/view_two"
+        android:layout_marginTop="5dp" >
+
+        <ImageView
+            android:id="@+id/add_friend_sms_imageview"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="8dp"
+            android:src="@drawable/sms_drawable" />
+
+        <TextView
+            android:id="@+id/add_friend_sms_textview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/add_friend_sms_imageview"
+            android:text="Moi ban qua SMS"
+            android:textColor="@android:color/black"
+            android:textSize="18dp" />
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/view_three"
+        android:layout_width="fill_parent"
+        android:layout_height="7dp"
+        android:layout_below="@id/add_friend_sms_relative_layout"
+        android:layout_marginTop="5dp"
+        android:background="@color/voucher_detail_background" />
+
+    <TextView
+        android:id="@+id/add_friend_contact_textview"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/view_three"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="7dp"
+        android:text="Danh ba"
+        android:textAllCaps="true"
+        android:textColor="@color/action_bar_background"
+        android:textSize="20dp" />
+
+    <View
+        android:id="@+id/view_four"
+        android:layout_width="fill_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@+id/add_friend_contact_textview"
+        android:layout_marginTop="5dp"
+        android:background="@android:color/background_dark" >
+    </View>
+
+    <RelativeLayout
+        android:id="@+id/contact_relativelayout"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/view_four"
+        android:layout_marginTop="3dp"
+        android:background="@color/voucher_detail_background" >
+
+        <ListView
+            android:id="@+id/contact_listview"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/white" >
+        </ListView>
+    </RelativeLayout>
+
+</RelativeLayout>

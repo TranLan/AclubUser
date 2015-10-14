@@ -13,6 +13,7 @@ import aclub.users.android.db.SpManager;
 import aclub.users.android.main.models.DrawerItem;
 import aclub.users.android.main.ui.cusview.DrawerAdapter;
 import aclub.users.android.main.ui.fragments.AclubFirstFragament;
+import aclub.users.android.main.ui.fragments.FriendFragment;
 import aclub.users.android.main.ui.fragments.NearByRestaurantsFragment;
 import aclub.users.android.main.ui.fragments.VoucherBoxFragment;
 import aclub.users.android.ui.cusdialog.CusDialogQuestion;
@@ -66,10 +67,10 @@ public class AclubMainActivity extends AclubBaseActivity implements OnItemClickL
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.aclub_main_layout);
+		initActionBar();
 		moveDrawerToTop();
 		initDrawer();
 		onItemClick(null, null, 0, 0);
-		initActionBar();
 		spf = SpManager.getInstances(AclubMainActivity.this);
 		edt = spf.edit();
 	}
@@ -97,7 +98,11 @@ public class AclubMainActivity extends AclubBaseActivity implements OnItemClickL
 		drawerList.add(new DrawerItem(getString(R.string.drawer_item_eight), R.drawable.drawer_friends));
 		drawerList.add(new DrawerItem());
 		drawerList.add(new DrawerItem(getString(R.string.drawer_item_night), R.drawable.drawer_profile));
-		drawerList.add(new DrawerItem(getString(R.string.logout_label), R.drawable.drawer_settings)); // change for settings --> logout
+		drawerList.add(new DrawerItem(getString(R.string.logout_label), R.drawable.drawer_settings)); // change
+																										// for
+																										// settings
+																										// -->
+																										// logout
 		DrawerAdapter adapter = new DrawerAdapter(this, R.layout.custom_list_drawer_layout, drawerList);
 
 		mDrawerList.setAdapter(adapter);
@@ -204,17 +209,31 @@ public class AclubMainActivity extends AclubBaseActivity implements OnItemClickL
 
 		switch (position) {
 		case CommonValues.HOME_DRAWER:
+			mSearchAbIv.setVisibility(View.VISIBLE);
+			mTitleAbTv.setText("ACLUB");
 			ftx.replace(R.id.main_content, new AclubFirstFragament(), "ONE");
 			ftx.addToBackStack(null);
 			break;
 		case CommonValues.VOUCHER_BOX_DRAWER:
+			mSearchAbIv.setVisibility(View.VISIBLE);
+			mTitleAbTv.setText("ACLUB");
 			ftx.replace(R.id.main_content, VoucherBoxFragment.newInstance(position + 1), "ONE");
 			ftx.addToBackStack(null);
 			break;
 		case CommonValues.SETTING_DRAWER:
+			mSearchAbIv.setVisibility(View.VISIBLE);
+			mTitleAbTv.setText("ACLUB");
 			displayLogoutDialog();
 			break;
+		case CommonValues.FRIEND_DRAWER:
+			mSearchAbIv.setVisibility(View.INVISIBLE);
+			mTitleAbTv.setText("Add Friends");
+			ftx.replace(R.id.main_content, FriendFragment.newInstance(position + 1));
+			ftx.addToBackStack(null);
+			break;
 		default:
+			mTitleAbTv.setText("ACLUB");
+			mSearchAbIv.setVisibility(View.VISIBLE);
 			ftx.replace(R.id.main_content, new AclubFirstFragament(), "ONE");
 			ftx.addToBackStack(null);
 			break;

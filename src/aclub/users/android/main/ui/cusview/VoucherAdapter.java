@@ -5,6 +5,8 @@ package aclub.users.android.main.ui.cusview;
 
 import java.util.ArrayList;
 
+import com.squareup.picasso.Picasso;
+
 import aclub.users.android.R;
 import aclub.users.android.httpservices.models.VoucherResponse;
 import aclub.users.android.main.models.HotSaleItem;
@@ -111,8 +113,10 @@ public class VoucherAdapter extends BaseAdapter {
 		holder.itemPrice.setText(item.getCode());
 		holder.itemRes.setText(item.getShortDesc());
 		holder.itemTitle.setText(item.getVenue().getName());
-		holder.image.setImageDrawable(view.getResources().getDrawable(
-				R.drawable.hot_sale_one));
+		
+		Picasso.with(context).load(item.getImages().getThumbLink()).placeholder(R.drawable.hot_sale_one).into(holder.image);
+//		holder.image.setImageDrawable(view.getResources().getDrawable(
+//				R.drawable.hot_sale_one));
 		holder.itemConfirm.setText(context
 				.getString(R.string.voucher_book_lable));
 		holder.itemConfirm.setOnClickListener(new View.OnClickListener() {

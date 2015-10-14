@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
  *
  */
 public class VoucherResponse extends BaseResponse {
-	
+
 	private static final long serialVersionUID = 1L;
 	@SerializedName(value = "id")
 	private int id;
@@ -30,11 +30,23 @@ public class VoucherResponse extends BaseResponse {
 	private int quantity;
 	@SerializedName(value = "venue")
 	private VoucherVenueResponse venue;
+	@SerializedName(value = "image")
+	private CouponsImage images;
 
-	public VoucherResponse(int id, String code, String startDate,
-			String endDate, String description, String shortDesc,
-			int requiredMinimumInvitees, int quantity,
-			VoucherVenueResponse venue) {
+	/**
+	 * @param id
+	 * @param code
+	 * @param startDate
+	 * @param endDate
+	 * @param description
+	 * @param shortDesc
+	 * @param requiredMinimumInvitees
+	 * @param quantity
+	 * @param venue
+	 * @param images
+	 */
+	public VoucherResponse(int id, String code, String startDate, String endDate, String description, String shortDesc,
+			int requiredMinimumInvitees, int quantity, VoucherVenueResponse venue, CouponsImage images) {
 		super();
 		this.id = id;
 		this.code = code;
@@ -45,6 +57,36 @@ public class VoucherResponse extends BaseResponse {
 		this.requiredMinimumInvitees = requiredMinimumInvitees;
 		this.quantity = quantity;
 		this.venue = venue;
+		this.images = images;
+	}
+
+	public VoucherResponse(int id, String code, String startDate, String endDate, String description, String shortDesc,
+			int requiredMinimumInvitees, int quantity, VoucherVenueResponse venue) {
+		super();
+		this.id = id;
+		this.code = code;
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.description = description;
+		this.shortDesc = shortDesc;
+		this.requiredMinimumInvitees = requiredMinimumInvitees;
+		this.quantity = quantity;
+		this.venue = venue;
+	}
+
+	/**
+	 * @return the images
+	 */
+	public CouponsImage getImages() {
+		return images;
+	}
+
+	/**
+	 * @param images
+	 *            the images to set
+	 */
+	public void setImages(CouponsImage images) {
+		this.images = images;
 	}
 
 	public int getId() {

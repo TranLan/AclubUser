@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/hot_sale_item_avatar_iv"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="160dp"
         android:layout_alignParentTop="true"
         android:scaleType="fitXY"
         android:src="@drawable/hot_sale_one" />
