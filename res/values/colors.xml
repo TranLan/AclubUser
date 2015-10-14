@@ -10,5 +10,6 @@
     <color name="drawer_background_color">#222222</color>
     <color name="search_restaurance_background_color">#BBBBBB</color>
     <color name="search_heat_normal_background_color">#CCCCCC</color>
+    <color name="voucher_detail_background">#DDDDDD</color>
 
 </resources>
