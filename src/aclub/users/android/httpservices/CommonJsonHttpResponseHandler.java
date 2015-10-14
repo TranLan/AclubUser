@@ -35,8 +35,7 @@ public class CommonJsonHttpResponseHandler extends JsonHttpResponseHandler {
 	private ResponseHandler _responseHandler;
 	private int _requestType;
 
-	public CommonJsonHttpResponseHandler(ResponseHandler responseHandler,
-			int requestType) {
+	public CommonJsonHttpResponseHandler(ResponseHandler responseHandler, int requestType) {
 		this._responseHandler = responseHandler;
 		this._requestType = requestType;
 	}
@@ -49,8 +48,7 @@ public class CommonJsonHttpResponseHandler extends JsonHttpResponseHandler {
 	 */
 	@Override
 	public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-		handleSuccess(statusCode, headers,
-				response != null ? response.toString() : "");
+		handleSuccess(statusCode, headers, response != null ? response.toString() : "");
 	}
 
 	/*
@@ -60,8 +58,7 @@ public class CommonJsonHttpResponseHandler extends JsonHttpResponseHandler {
 	 * org.apache.http.Header[], java.lang.String)
 	 */
 	@Override
-	public void onSuccess(int statusCode, Header[] headers,
-			String responseString) {
+	public void onSuccess(int statusCode, Header[] headers, String responseString) {
 		handleSuccess(statusCode, headers, responseString);
 	}
 
@@ -86,11 +83,8 @@ public class CommonJsonHttpResponseHandler extends JsonHttpResponseHandler {
 	 * org.apache.http.Header[], java.lang.Throwable, org.json.JSONObject)
 	 */
 	@Override
-	public void onFailure(int statusCode, Header[] headers,
-			Throwable throwable, JSONObject errorResponse) {
-		handleFailure(statusCode, headers,
-				errorResponse != null ? errorResponse.toString() : "",
-				throwable);
+	public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+		handleFailure(statusCode, headers, errorResponse != null ? errorResponse.toString() : "", throwable);
 	}
 
 	/*
@@ -100,10 +94,8 @@ public class CommonJsonHttpResponseHandler extends JsonHttpResponseHandler {
 	 * org.apache.http.Header[], java.lang.Throwable, org.json.JSONArray)
 	 */
 	@Override
-	public void onFailure(int statusCode, Header[] headers,
-			Throwable throwable, JSONArray errorResponse) {
-		writeLogFailure("onFailure", statusCode,
-				"JSONArray is not implemented", throwable);
+	public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+		writeLogFailure("onFailure", statusCode, "JSONArray is not implemented", throwable);
 	}
 
 	/*
@@ -113,55 +105,49 @@ public class CommonJsonHttpResponseHandler extends JsonHttpResponseHandler {
 	 * org.apache.http.Header[], java.lang.String, java.lang.Throwable)
 	 */
 	@Override
-	public void onFailure(int statusCode, Header[] headers,
-			String responseString, Throwable throwable) {
+	public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
 		handleFailure(statusCode, headers, responseString, throwable);
 	}
 
-	private void writeLogSuccess(String function, int statusCode,
-			String responseBody) {
+	private void writeLogSuccess(String function, int statusCode, String responseBody) {
 		DLog.i(LOG_TAG, "RestApi::" + function + "::onSuccess");
 		DLog.i(LOG_TAG, "    statusCode: " + statusCode);
 		DLog.i(LOG_TAG, "    responseBody: " + responseBody);
 	}
 
-	private void writeLogErrSuccess(String function, int errCode,
-			String responseBody) {
+	private void writeLogErrSuccess(String function, int errCode, String responseBody) {
 		DLog.i(LOG_TAG, "RestApi::" + function + "::onSuccess");
 		DLog.i(LOG_TAG, "    errCode: " + errCode);
 		DLog.i(LOG_TAG, "    responseBody: " + responseBody);
 	}
 
-	private void writeLogFailure(String function, int statusCode,
-			String responseBody, Throwable e) {
+	private void writeLogFailure(String function, int statusCode, String responseBody, Throwable e) {
 		DLog.d("RestApi::" + function + "::onFailure");
 		DLog.d(LOG_TAG, "    statusCode: " + statusCode);
 		DLog.d(LOG_TAG, "    errorResponse: " + responseBody);
 		DLog.d(LOG_TAG, "    error: " + e.getMessage());
 	}
 
-	private void handleSuccess(int statusCode, Header[] headers,
-			JSONArray responJson) {
+	private void handleSuccess(int statusCode, Header[] headers, JSONArray responJson) {
 		switch (_requestType) {
 		case Constants.ApiConst.NEAR_BY_RESTAURANTS:
-			responseSuccess("NEAR_BY_RESTAURANTS", statusCode, responJson,
-					NearByRestaurantsResponse.class);
+			responseSuccess("NEAR_BY_RESTAURANTS", statusCode, responJson, NearByRestaurantsResponse.class);
 			break;
 		case Constants.ApiConst.RESTAURANTS_BY_NAME:
-			responseSuccess("RESTAURANTS_BY_NAME", statusCode, responJson,
-					NearByRestaurantsResponse.class);
+			responseSuccess("RESTAURANTS_BY_NAME", statusCode, responJson, NearByRestaurantsResponse.class);
 			break;
 		case Constants.ApiConst.VOUCHER:
-			responseSuccess("VOUCHER", statusCode, responJson,
-					VoucherResponse.class);
+			responseSuccess("VOUCHER", statusCode, responJson, VoucherResponse.class);
+			break;
+		case Constants.ApiConst.HOT_AND_NEARBY:
+			responseSuccess("HOT_AND_NEARBY", statusCode, responJson, VoucherResponse.class);
 			break;
 		default:
 			break;
 		}
 	}
 
-	private void handleSuccess(int statusCode, Header[] headers,
-			String responseBody) {
+	private void handleSuccess(int statusCode, Header[] headers, String responseBody) {
 		DLog.i(LOG_TAG, "responseString -> " + responseBody);
 		// if (!StringUtils.isEmpty(responseString)) {
 		// BaseResponse response = (BaseResponse)
@@ -182,16 +168,13 @@ public class CommonJsonHttpResponseHandler extends JsonHttpResponseHandler {
 		// }
 		switch (_requestType) {
 		case Constants.ApiConst.API_SAMPLE:
-			responseSuccess("requestSample", statusCode, responseBody,
-					SampleResponse.class);
+			responseSuccess("requestSample", statusCode, responseBody, SampleResponse.class);
 			break;
 		case Constants.ApiConst.PHONE_REGISTRAION:
-			responseSuccess("registerNumberPhone", statusCode, responseBody,
-					User.class);
+			responseSuccess("registerNumberPhone", statusCode, responseBody, User.class);
 			break;
 		case Constants.ApiConst.PHONE_VERIFICATION_TOKEN:
-			responseSuccess("verifyNumberPhone", statusCode, responseBody,
-					User.class);
+			responseSuccess("verifyNumberPhone", statusCode, responseBody, User.class);
 			break;
 		case Constants.ApiConst.PHONE_UPDATE_EMAIL:
 			responseSuccess("updateEmail", statusCode, responseBody, User.class);
@@ -200,8 +183,7 @@ public class CommonJsonHttpResponseHandler extends JsonHttpResponseHandler {
 			responseSuccess("verifyEmail", statusCode, responseBody, User.class);
 			break;
 		case Constants.ApiConst.EMAIL_RESENT:
-			responseSuccess("EMAIL_RESENT", statusCode, responseBody,
-					User.class);
+			responseSuccess("EMAIL_RESENT", statusCode, responseBody, User.class);
 			break;
 		case Constants.ApiConst.LOGIN_PHONE:
 			responseSuccess("LOGIN_PHONE", statusCode, responseBody, User.class);
@@ -210,15 +192,15 @@ public class CommonJsonHttpResponseHandler extends JsonHttpResponseHandler {
 			responseSuccess("LOGIN_EMAIL", statusCode, responseBody, User.class);
 			break;
 		case Constants.ApiConst.UPDATE_PROFILE:
-			responseSuccess("UPDATE_PROFILE", statusCode, responseBody,
-					User.class);
+			responseSuccess("UPDATE_PROFILE", statusCode, responseBody, User.class);
 			break;
 		case Constants.ApiConst.NEAR_BY_RESTAURANTS:
-			responseSuccess("NEAR_BY_RESTAURANTS", statusCode, responseBody,
-					NearByRestaurantsResponse.class);
+			responseSuccess("NEAR_BY_RESTAURANTS", statusCode, responseBody, NearByRestaurantsResponse.class);
 		case Constants.ApiConst.DETAIL_RESTAURANT:
-			responseSuccess("DETAIL_RESTAURANT", statusCode, responseBody,
-					NearByRestaurantsResponse.class);
+			responseSuccess("DETAIL_RESTAURANT", statusCode, responseBody, NearByRestaurantsResponse.class);
+			break;
+		case Constants.ApiConst.VOUCHER_DETAIL:
+			responseSuccess("VOUCHER_DETAIL", statusCode, responseBody, VoucherResponse.class);
 			break;
 		// Handle for login request
 		// case Constants.ApiConst.API_LOGIN:
@@ -265,8 +247,8 @@ public class CommonJsonHttpResponseHandler extends JsonHttpResponseHandler {
 	 * @param <T>
 	 *            Class which extends from {@code BaseResponse}
 	 */
-	private <T extends BaseResponse> void responseSuccess(String function,
-			int statusCode, String responseBody, Class<T> classOfT) {
+	private <T extends BaseResponse> void responseSuccess(String function, int statusCode, String responseBody,
+			Class<T> classOfT) {
 		// Write success log
 		writeLogSuccess(function, statusCode, responseBody);
 
@@ -294,8 +276,8 @@ public class CommonJsonHttpResponseHandler extends JsonHttpResponseHandler {
 	}
 
 	@SuppressWarnings("unchecked")
-	private <T extends BaseResponse> void responseSuccess(String function,
-			int statusCode, JSONArray result, Class<T> classOfT) {
+	private <T extends BaseResponse> void responseSuccess(String function, int statusCode, JSONArray result,
+			Class<T> classOfT) {
 		writeLogSuccess(function, statusCode, "");
 		ArrayList<T> listData = new ArrayList<T>();
 		for (int i = 0; i < result.length(); i++) {
@@ -339,12 +321,10 @@ public class CommonJsonHttpResponseHandler extends JsonHttpResponseHandler {
 		_responseHandler.onError(errMsg);
 	}
 
-	private void handleFailure(int statusCode, Header[] headers,
-			String responseBody, Throwable throwable) {
+	private void handleFailure(int statusCode, Header[] headers, String responseBody, Throwable throwable) {
 		switch (_requestType) {
 		case Constants.ApiConst.API_SAMPLE:
-			responseFailure("requestSample", statusCode, responseBody,
-					throwable);
+			responseFailure("requestSample", statusCode, responseBody, throwable);
 			break;
 		case Constants.ApiConst.PHONE_REGISTRAION:
 			responseFailure("registerNum", statusCode, responseBody, throwable);
@@ -365,32 +345,27 @@ public class CommonJsonHttpResponseHandler extends JsonHttpResponseHandler {
 			responseFailure("LOGIN_EMAIL", statusCode, responseBody, throwable);
 			break;
 		case Constants.ApiConst.UPDATE_PROFILE:
-			responseFailure("UPDATE_PROFILE", statusCode, responseBody,
-					throwable);
+			responseFailure("UPDATE_PROFILE", statusCode, responseBody, throwable);
 			break;
 		case Constants.ApiConst.EMAIL_RESENT:
 			if (statusCode == 200) {
 				responseSuccess("EMAIL_RESENT", statusCode, "", null);
 			} else {
-				responseFailure("EMAIL_RESENT", statusCode, responseBody,
-						throwable);
+				responseFailure("EMAIL_RESENT", statusCode, responseBody, throwable);
 			}
 			break;
 		case Constants.ApiConst.OTP_PASS_RESENT:
 			if (statusCode == 200) {
 				responseSuccess("OTP_PASS_RESENT", statusCode, "", null);
 			} else {
-				responseFailure("OTP_PASS_RESENT", statusCode, responseBody,
-						throwable);
+				responseFailure("OTP_PASS_RESENT", statusCode, responseBody, throwable);
 			}
 			break;
 		case Constants.ApiConst.NEAR_BY_RESTAURANTS:
-			responseFailure("NEAR_BY_RESTAURANTS", statusCode, responseBody,
-					throwable);
+			responseFailure("NEAR_BY_RESTAURANTS", statusCode, responseBody, throwable);
 			break;
 		default:
-			writeLogFailure("handleFailure:default", statusCode, responseBody,
-					throwable);
+			writeLogFailure("handleFailure:default", statusCode, responseBody, throwable);
 			break;
 		}
 	}
@@ -407,8 +382,7 @@ public class CommonJsonHttpResponseHandler extends JsonHttpResponseHandler {
 	 * @param throwable
 	 *            error that thrown by HTTP response
 	 */
-	private void responseFailure(String function, int statusCode,
-			String responseBody, Throwable throwable) {
+	private void responseFailure(String function, int statusCode, String responseBody, Throwable throwable) {
 		// Write error log
 		writeLogFailure(function, statusCode, responseBody, throwable);
 

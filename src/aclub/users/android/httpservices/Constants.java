@@ -32,6 +32,8 @@ public class Constants {
 		int DETAIL_RESTAURANT = 2;
 		int RESTAURANTS_BY_NAME = 3;
 		int VOUCHER = 4;
+		int HOT_AND_NEARBY = 5;
+		int VOUCHER_DETAIL = 6;
 		int PHONE_REGISTRAION = 7;
 		int PHONE_VERIFICATION_TOKEN = 8;
 		int PHONE_UPDATE_EMAIL = 9;

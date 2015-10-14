@@ -33,8 +33,7 @@ import android.widget.TextView;
  * @author dinostudio8891@gmail.com
  *
  */
-public class VoucherBoxFragment extends Fragment implements
-		View.OnClickListener {
+public class VoucherBoxFragment extends Fragment implements View.OnClickListener {
 
 	private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -45,6 +44,9 @@ public class VoucherBoxFragment extends Fragment implements
 	private EditText searchVoucherEdt;
 	private Button searchVoucherBtn;
 	private TextView searchVoucherResultTv;
+	private String latitude = "";
+	private String longitude = "";
+	public static int voucherSelectedId;
 
 	public interface BookInterface {
 		void onBookVoucher(VoucherResponse item);
@@ -68,10 +70,8 @@ public class VoucherBoxFragment extends Fragment implements
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.voucher_fragment_layout,
-				container, false);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.voucher_fragment_layout, container, false);
 		initHeader(rootView);
 		initListView(rootView);
 		return rootView;
@@ -81,51 +81,47 @@ public class VoucherBoxFragment extends Fragment implements
 		voucherListView = (ListView) view.findViewById(R.id.voucher_listview);
 		listVoucher = new ArrayList<VoucherResponse>();
 		CommonValues.showDialogLoading(getActivity());
-		RestHelper.getInstance().getVoucher(getActivity(),
-				new ResponseHandler() {
+		if (CommonValues.TEST) {
+			latitude = "21.022592";
+			longitude = "105.852392";
+		}
+		RestHelper.getInstance().getHotAndNearBy(getActivity(), latitude, longitude, new ResponseHandler() {
+
+			@Override
+			public void onSuccess(ArrayList<BaseResponse> responses, boolean isJSONArrayFB) {
+				listVoucher.clear();
+				for (int i = 0; i < responses.size(); i++) {
+					VoucherResponse vr = (VoucherResponse) responses.get(i);
+					listVoucher.add(vr);
+				}
+				voucherAdapter = new VoucherAdapter(listVoucher, getActivity(), new BookInterface() {
 
 					@Override
-					public void onSuccess(ArrayList<BaseResponse> responses,
-							boolean isJSONArrayFB) {
-						listVoucher.clear();
-						for (int i = 0; i < responses.size(); i++) {
-							VoucherResponse vr = (VoucherResponse) responses
-									.get(i);
-							listVoucher.add(vr);
-						}
-						voucherAdapter = new VoucherAdapter(listVoucher,
-								getActivity(), new BookInterface() {
-
-									@Override
-									public void onBookVoucher(
-											VoucherResponse item) {
-										FragmentManager fm = getActivity()
-												.getSupportFragmentManager();
-										FragmentTransaction ft = fm
-												.beginTransaction();
-										ft.replace(R.id.main_content,
-												VoucherDetailFragment
-														.newInstance(0));
-										ft.addToBackStack(null);
-										ft.commit();
-									}
-								});
-						voucherListView.setAdapter(voucherAdapter);
-						CommonValues.hideDialogLoading();
-					}
-
-					@Override
-					public void onSuccess(BaseResponse response) {
-						// TODO Auto-generated method stub
-
-					}
-
-					@Override
-					public void onError(ErrorMessage error) {
-						// TODO Auto-generated method stub
-
+					public void onBookVoucher(VoucherResponse item) {
+						voucherSelectedId = item.getId();
+						FragmentManager fm = getActivity().getSupportFragmentManager();
+						FragmentTransaction ft = fm.beginTransaction();
+						ft.replace(R.id.main_content, VoucherDetailFragment.newInstance(0));
+						ft.addToBackStack(null);
+						ft.commit();
 					}
 				});
+				voucherListView.setAdapter(voucherAdapter);
+				CommonValues.hideDialogLoading();
+			}
+
+			@Override
+			public void onSuccess(BaseResponse response) {
+				// TODO Auto-generated method stub
+
+			}
+
+			@Override
+			public void onError(ErrorMessage error) {
+				// TODO Auto-generated method stub
+
+			}
+		});
 
 		// listVoucher
 		// .add(new VoucherItem("Mỳ hoành thánh, 4 phần cho gia đình",
@@ -184,17 +180,12 @@ public class VoucherBoxFragment extends Fragment implements
 	}
 
 	private void initHeader(View view) {
-		voucherHeaderLayout = (RelativeLayout) view
-				.findViewById(R.id.voucher_header_layout);
-		searchVoucherEdt = (EditText) voucherHeaderLayout
-				.findViewById(R.id.search_restaurance_edt);
+		voucherHeaderLayout = (RelativeLayout) view.findViewById(R.id.voucher_header_layout);
+		searchVoucherEdt = (EditText) voucherHeaderLayout.findViewById(R.id.search_restaurance_edt);
 		searchVoucherEdt.setHint(getString(R.string.search_by_city));
-		searchVoucherBtn = (Button) voucherHeaderLayout
-				.findViewById(R.id.search_restaurance_btn);
-		searchVoucherResultTv = (TextView) voucherHeaderLayout
-				.findViewById(R.id.search_result_total_tv);
-		searchVoucherResultTv
-				.setText(getString(R.string.voucher_total_result_label));
+		searchVoucherBtn = (Button) voucherHeaderLayout.findViewById(R.id.search_restaurance_btn);
+		searchVoucherResultTv = (TextView) voucherHeaderLayout.findViewById(R.id.search_result_total_tv);
+		searchVoucherResultTv.setText(getString(R.string.voucher_total_result_label));
 		searchVoucherBtn.setOnClickListener(this);
 
 	}

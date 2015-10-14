@@ -187,23 +187,6 @@
                 android:text="1. Thoi gian"
                 android:textColor="@android:color/black"
                 android:textSize="17dp" />
-
-            <TextView
-                android:id="@+id/voucher_detail_guide_time_tv"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:text="- Tu ngay"
-                android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/voucher_detail_guide_step_join_aclub_tv"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:text="2. Cac buoc tham gia san choi"
-                android:textColor="@android:color/black"
-                android:textSize="17dp" />
         </LinearLayout>
     </RelativeLayout>
 
