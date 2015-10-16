@@ -13,6 +13,7 @@ import android.content.Intent;
 
 /**
  * @author ntdong2012
+ * @tranlan
  *
  */
 public class AclubApplication extends Application {
